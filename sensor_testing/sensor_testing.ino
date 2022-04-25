@@ -1,4 +1,4 @@
-int sensor = 2;
+int sensor = A0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -9,7 +9,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int value = digitalRead(sensor);
+  int value = analogRead(sensor);
   Serial.print(value);
   Serial.print("\n");
   delay(1000);
