@@ -11,11 +11,15 @@ const int PhotoIn = 2;
 int State=0 ; 
 
 // SENSOR DE DISTâNCIA FRENTE
-int sensorFrente = A0;
-int sensorTras = A1;
+int sensorFrente = A1;
+int sensorTras = A0;
+int sensorArd= A2; 
+int sensorAmp = A5; 
 
 int valueFrente;
 int valueTras;
+int valueArd; 
+int valueAmp;
 
 void setup(){
 Serial.begin(9600);
@@ -27,35 +31,39 @@ pinMode(motorPin4, OUTPUT);
 pinMode(PhotoIn, INPUT); 
 pinMode(sensorFrente, INPUT);
 pinMode(sensorTras, INPUT);
+pinMode(sensorArd, INPUT);
+pinMode(sensorAmp, INPUT);
 
 //Motor Control A in both directions
 
   do {
-  //analogWrite(motorPin1, speed);
-  //delay(120);
-  //analogWrite(motorPin1, 0);
-  //delay(100);
-  analogWrite(motorPin2, speed);
-  delay(250);
-  analogWrite(motorPin2, 0);
-  analogWrite(motorPin3, speed);
-  delay(250);
-  analogWrite(motorPin3, 0);
+  analogWrite(motorPin1, speed);
+  delay(120);
+  analogWrite(motorPin1, 0);
   delay(100);
-  //analogWrite(motorPin4, speed);
-  //delay(120);
-  //analogWrite(motorPin4, 0);
+  //analogWrite(motorPin2, speed);
+  //delay(250);
+  //analogWrite(motorPin2, 0);
+  //analogWrite(motorPin3, speed);
+  //delay(250);
+  //analogWrite(motorPin3, 0);
   //delay(100);
+  analogWrite(motorPin4, speed);
+  delay(120);
+  analogWrite(motorPin4, 0);
+  delay(100);
 
   
   valueFrente = analogRead(sensorFrente);
   valueTras = analogRead(sensorTras);
+  valueArd = analogRead(sensorArd);
+  valueAmp = analogRead(sensorAmp);
   Serial.print("Frente: ");
   Serial.print(valueFrente);
   Serial.print("Trás: ");
   Serial.print(valueTras);
   Serial.print("\n");
-  } while (valueFrente > 480 && valueTras > 600);
+  } while (valueTras > 650 && valueFrente > 850 );  //&& valueArd > 750 && valueAmp > 
 
 }
 void loop(){
