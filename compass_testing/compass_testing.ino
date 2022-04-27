@@ -1,5 +1,7 @@
 // Basic demo for magnetometer readings from Adafruit LIS3MDL
 
+//BUSSOLA
+
 #include <Wire.h>
 #include <Adafruit_LIS3MDL.h>
 #include <Adafruit_Sensor.h>
@@ -10,9 +12,34 @@ Adafruit_LIS3MDL lis3mdl;
 #define LIS3MDL_MOSI 11
 #define LIS3MDL_CS 10
 
+int originx;
+int originy;
+
+int targetx = 10;
+int targety = 0;
+
+int placex;
+int placey;
+
+//MOTOR
+
+// Motor 1
+const int motorPin1 = 9; // amarelo
+const int motorPin2 = 8; // amarelo
+// Motor 2
+const int motorPin3 = 7; // vermelho
+const int motorPin4 = 6; // branco
+int speed = 255;
+
 void setup(void) {
   Serial.begin(115200);
+  
   while (!Serial) delay(10);     // will pause Zero, Leonardo, etc until serial console opens
+
+  pinMode(motorPin1, OUTPUT);
+  pinMode(motorPin2, OUTPUT);
+  pinMode(motorPin3, OUTPUT);
+  pinMode(motorPin4, OUTPUT);
 
   Serial.println("Adafruit LIS3MDL test!");
   
@@ -35,21 +62,53 @@ void setup(void) {
                           true, // polarity
                           false, // don't latch
                           true); // enabled!
+
+  lis3mdl.read();      // get X Y data at once
+  sensors_event_t event; 
+  lis3mdl.getEvent(&event);
+  /* Display the results (magnetic field is measured in uTesla) */
+  originx = event.magnetic.x;
+  originy = event.magnetic.y;
+
+  targetx += originx;
+  targety += originy;
 }
 
 void loop() {
-  delay(2000);
   lis3mdl.read();      // get X Y and Z data at once
 
   /* Or....get a new sensor event, normalized to uTesla */
   sensors_event_t event; 
   lis3mdl.getEvent(&event);
   /* Display the results (magnetic field is measured in uTesla) */
-  Serial.print("\tX: "); Serial.print(event.magnetic.x);
-  Serial.print(" \tY: "); Serial.print(event.magnetic.y); 
-  Serial.print(" \tZ: "); Serial.print(event.magnetic.z); 
+  placex = event.magnetic.x;
+  Serial.print("\tX: "); Serial.print(placex);
+  placey = event.magnetic.y;
+  Serial.print(" \tY: "); Serial.print(placey);  
   Serial.println(" uTesla ");
 
-  delay(100); 
-  Serial.println();
+  if (targetx > originx){
+    
+    if (placex < targetx){
+    analogWrite(motorPin2, speed);
+    delay(250);
+    analogWrite(motorPin2, 0);
+    analogWrite(motorPin3, speed);
+    delay(250);
+    analogWrite(motorPin3, 0);
+    delay(100);
+    }
+    
+  } else if (targetx < originx){
+    
+    if (placex > targetx){
+    analogWrite(motorPin1, speed);
+    delay(250);
+    analogWrite(motorPin1, 0);
+    analogWrite(motorPin4, speed);
+    delay(250);
+    analogWrite(motorPin4, 0);
+    delay(100);
+    }
+  }
 }
