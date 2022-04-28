@@ -132,9 +132,6 @@ void setup(void)
 {
   Serial.begin(115200);
 
-  while (!Serial)
-    delay(10);
-
   pinMode(motorPin1, OUTPUT);
   pinMode(motorPin2, OUTPUT);
   pinMode(motorPin3, OUTPUT);

@@ -18,12 +18,12 @@ int valueEsq;
 
 void straight_line(){
 
-    analogWrite(motorPin1, speed);
+    analogWrite(motorPin2, speed);
     delay(100);
-    analogWrite(motorPin1, 0);
-    analogWrite(motorPin4, speed);
+    analogWrite(motorPin2, 0);
+    analogWrite(motorPin3, speed);
     delay(100);
-    analogWrite(motorPin4, 0);
+    analogWrite(motorPin3, 0);
 
     valueFrente = analogRead(sensorFrente);
     valueEsq = analogRead(sensorEsq);

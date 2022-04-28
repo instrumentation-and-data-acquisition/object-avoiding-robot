@@ -31,6 +31,17 @@ const int motorPin3 = 7; // vermelho
 const int motorPin4 = 6; // branco
 int speed = 255;
 
+void straight_line()
+{
+  analogWrite(motorPin2, speed);
+  delay(100);
+  analogWrite(motorPin2, 0);
+  analogWrite(motorPin3, speed);
+  delay(100);
+  analogWrite(motorPin3, 0);
+
+}
+
 void setup(void)
 {
     Serial.begin(115200);
@@ -98,16 +109,9 @@ void loop()
 
     if (targetx > originx)
     {
-
         if (placex < targetx)
         {
-            analogWrite(motorPin2, speed);
-            delay(250);
-            analogWrite(motorPin2, 0);
-            analogWrite(motorPin3, speed);
-            delay(250);
-            analogWrite(motorPin3, 0);
-            delay(100);
+            straight_line();
         }
     }
     else if (targetx < originx)

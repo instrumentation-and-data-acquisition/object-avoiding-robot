@@ -50,7 +50,9 @@ void straight_line()
   analogWrite(motorPin3, 0);
 
   valueFrente = analogRead(sensorFrente);
+  Serial.println(valueFrente);
   valueEsq = analogRead(sensorEsq);
+  Serial.println(valueEsq);
 
 }
 

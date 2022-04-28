@@ -21,25 +21,11 @@ int targety = 0;
 int placex;
 int placey;
 
-//MOTOR
-
-// Motor 1
-const int motorPin1 = 9; // amarelo
-const int motorPin2 = 8; // amarelo
-// Motor 2
-const int motorPin3 = 7; // vermelho
-const int motorPin4 = 6; // branco
-int speed = 255;
 
 void setup(void) {
   Serial.begin(115200);
   
   while (!Serial) delay(10);     // will pause Zero, Leonardo, etc until serial console opens
-
-  pinMode(motorPin1, OUTPUT);
-  pinMode(motorPin2, OUTPUT);
-  pinMode(motorPin3, OUTPUT);
-  pinMode(motorPin4, OUTPUT);
 
   Serial.println("Adafruit LIS3MDL test!");
   
@@ -87,28 +73,5 @@ void loop() {
   Serial.print(" \tY: "); Serial.print(placey);  
   Serial.println(" uTesla ");
 
-  if (targetx > originx){
-    
-    if (placex < targetx){
-    analogWrite(motorPin2, speed);
-    delay(250);
-    analogWrite(motorPin2, 0);
-    analogWrite(motorPin3, speed);
-    delay(250);
-    analogWrite(motorPin3, 0);
-    delay(100);
-    }
-    
-  } else if (targetx < originx){
-    
-    if (placex > targetx){
-    analogWrite(motorPin1, speed);
-    delay(250);
-    analogWrite(motorPin1, 0);
-    analogWrite(motorPin4, speed);
-    delay(250);
-    analogWrite(motorPin4, 0);
-    delay(100);
-    }
-  }
+ 
 }
