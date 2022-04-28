@@ -29,19 +29,17 @@ void loop()
   State = analogRead(PhotoIn);
   Serial.print(State);
   Serial.print("\n");
-  delay(1000);
 
   // analogWrite(motorPin1, speed);
   // delay(120);
   // analogWrite(motorPin1, 0);
   // delay(100);
   analogWrite(motorPin2, speed);
-  delay(250);
+  delay(100);
   analogWrite(motorPin2, 0);
   analogWrite(motorPin3, speed);
-  delay(250);
-  analogWrite(motorPin3, 0);
   delay(100);
+  analogWrite(motorPin3, 0);
   // analogWrite(motorPin4, speed);
   // delay(120);
   // analogWrite(motorPin4, 0);
