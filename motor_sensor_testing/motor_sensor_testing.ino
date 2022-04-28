@@ -1,52 +1,100 @@
 
 // Motor 1
-const int motorPin1 = 9; // amarelo direita?
+const int motorPin1 = 9; // amarelo
 const int motorPin2 = 8; // amarelo
 // Motor 2
-const int motorPin3 = 7; // vermelho
+const int motorPin3 = 7; // vermelho direita
 const int motorPin4 = 6; // branco
 int speed = 255;
 
-const int PhotoIn = 2;
-int State = 0;
-
-int pilha = 3;
-
-// 5 é 1 com 2 em paralelo com 2 em paralelo
-
 // SENSOR DE DISTâNCIA FRENTE
-int sensorFrente = A1;
-int sensorTras = A0;
-int sensorFrenteEsq = A3; // frente esquerda
-int sensorFrenteDir = A5;
+int sensorFrente = A2;
+int sensorEsq = A1; // frente esquerda
 
-int maxDistFrente = 600;
-int maxDistTras = 500;
-int maxDistFrenteEsq = 600;
-int maxDistFrenteDir = 600;
+int maxDistFrente = 650;
+int maxDistEsq = 650;
 
 int valueFrente;
-int valueTras;
-int valueFrenteEsq;
-int valueFrenteDir;
+int valueEsq;
 
-void contornar(){
-  do {
-  analogWrite(motorPin2, speed); //vira direita
-  delay(130);
+void straight_line()
+{
+
+  analogWrite(motorPin2, speed);
+  delay(100);
   analogWrite(motorPin2, 0);
-  valueFrenteEsq = analogRead(sensorFrenteEsq);
-  Serial.print("Frente esq: ");
-  Serial.print(valueFrenteEsq);
+  analogWrite(motorPin3, speed);
+  delay(100);
+  analogWrite(motorPin3, 0);
+
   valueFrente = analogRead(sensorFrente);
-  Serial.print(" Frente: ");
+  Serial.print("Frente: ");
   Serial.print(valueFrente);
-  valueFrenteDir = analogRead(sensorFrenteDir);
-  Serial.print(" Frente Dir: ");
-  Serial.print(valueFrenteDir);
-  Serial.print("\n");
-  } while(valueFrenteEsq <= 800 || valueFrente <= 800 || valueFrenteDir <= 800);
-  
+  valueEsq = analogRead(sensorEsq);
+  Serial.print(" Esquerda: ");
+  Serial.println(valueEsq);
+}
+
+void contornar()
+{
+
+  int i = 0;
+
+  do
+  {
+    analogWrite(motorPin1, speed);
+    delay(100);
+    analogWrite(motorPin1, 0);
+    analogWrite(motorPin4, speed);
+    delay(100);
+    analogWrite(motorPin4, 0);
+    i++;
+  } while (i < 7);
+
+  analogWrite(motorPin2, speed);
+  delay(750);
+  analogWrite(motorPin2, 0);
+
+  i = 0;
+
+  while (i < 7)
+  {
+
+    straight_line();
+    i++;
+  }
+
+  analogWrite(motorPin3, speed);
+  delay(750);
+  analogWrite(motorPin3, 0);
+
+  i = 0;
+
+  while (i < 28)
+  {
+
+    straight_line();
+    i++;
+  }
+
+  analogWrite(motorPin3, speed);
+  delay(750);
+  analogWrite(motorPin3, 0);
+
+  i = 0;
+
+  while (i < 7)
+  {
+
+    straight_line();
+    i++;
+  }
+
+  analogWrite(motorPin3, speed);
+  delay(750);
+  analogWrite(motorPin3, 0);
+
+  straight_line();
 }
 
 void setup()
@@ -57,107 +105,16 @@ void setup()
   pinMode(motorPin2, OUTPUT);
   pinMode(motorPin3, OUTPUT);
   pinMode(motorPin4, OUTPUT);
-  pinMode(PhotoIn, INPUT);
   pinMode(sensorFrente, INPUT);
-  pinMode(sensorTras, INPUT);
-  pinMode(sensorFrenteEsq, INPUT);
-  pinMode(sensorFrenteDir, INPUT);
+  pinMode(sensorEsq, INPUT);
 
-   do
+  do
   {
-    analogWrite(motorPin2, speed);
-    delay(100);
-    analogWrite(motorPin2, 0);
-    analogWrite(motorPin3, speed);
-    delay(100);
-    analogWrite(motorPin3, 0);
-
-    valueFrente = analogRead(sensorFrente);
-    valueTras = analogRead(sensorTras);
-
-    Serial.print("frente");
-    
-//    Serial.print("Frente: ");
-//    Serial.print(valueFrente);
-//    Serial.print("Trás: ");
-//    Serial.print(valueTras);
-//    Serial.print("\n");
-  } while (valueFrente > maxDistFrente && valueTras > maxDistTras);
+    straight_line();
+  } while (valueFrente > maxDistFrente);
 
   contornar();
-
-    //analogWrite(motorPin2, speed);
-    //delay(3000/pilha);
-    //analogWrite(motorPin2, 0);
-
-//    int i = 0;
-//
-//    while (i < 5){
-//  
-//      analogWrite(motorPin2, speed);
-//      delay(130);
-//      analogWrite(motorPin2, 0);
-//      analogWrite(motorPin3, speed);
-//      delay(100);
-//      analogWrite(motorPin3, 0);
-//
-//      i+=1;
-//
-//    }
-//
-//    analogWrite(motorPin3, speed);
-//    delay(3000/2/pilha);
-//    analogWrite(motorPin3, 0);
-//
-//    while (i < 5){
-//  
-//      analogWrite(motorPin2, speed);
-//      delay(130);
-//      analogWrite(motorPin2, 0);
-//      analogWrite(motorPin3, speed);
-//      delay(100);
-//      analogWrite(motorPin3, 0);
-//
-//      i+=1;
-//
-//    }
-//
-//    analogWrite(motorPin3, speed);
-//    delay(3000/2/pilha);
-//    analogWrite(motorPin3, 0);
-//
-//    while (i < 5){
-//  
-//      analogWrite(motorPin2, speed);
-//      delay(130);
-//      analogWrite(motorPin2, 0);
-//      analogWrite(motorPin3, speed);
-//      delay(100);
-//      analogWrite(motorPin3, 0);
-//
-//      i+=1;
-//
-//    }
-//
-//    analogWrite(motorPin2, speed);
-//    delay(3000/pilha);
-//    analogWrite(motorPin2, 0);
-//
-//    while (i < 50){
-//  
-//      analogWrite(motorPin2, speed);
-//      delay(130);
-//      analogWrite(motorPin2, 0);
-//      analogWrite(motorPin3, speed);
-//      delay(100);
-//      analogWrite(motorPin3, 0);
-//
-//      i+=1;
-//
-//    }
-  
 }
 void loop()
 {
-
 }
